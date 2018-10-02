@@ -275,12 +275,12 @@ function toggleCodeBlock(editor) {
 		 * cm and line_num are required.  Others are optional for efficiency
 		 *   To check in the middle of a line, pass in firstTok yourself.
 		 */
-		line     = line || cm.getLineHandle(line_num);
-		firstTok = firstTok || cm.getTokenAt({
+		line      = line || cm.getLineHandle(line_num);
+		firstTok  = firstTok || cm.getTokenAt({
 			line : line_num,
 			ch   : 1
 		});
-		lastTok  = lastTok || (!!line.text && cm.getTokenAt({
+		lastTok   = lastTok || (!!line.text && cm.getTokenAt({
 			line : line_num,
 			ch   : line.text.length - 1
 		}));
@@ -300,10 +300,10 @@ function toggleCodeBlock(editor) {
 
 	function insertFencingAtSelection(cm, cur_start, cur_end, fenceCharsToInsert) {
 		var start_line_sel = cur_start.line + 1,
-			end_line_sel = cur_end.line + 1,
-			sel_multi    = cur_start.line !== cur_end.line,
-			repl_start   = fenceCharsToInsert + "\n",
-			repl_end     = "\n" + fenceCharsToInsert;
+			end_line_sel   = cur_end.line + 1,
+			sel_multi      = cur_start.line !== cur_end.line,
+			repl_start     = fenceCharsToInsert + "\n",
+			repl_end       = "\n" + fenceCharsToInsert;
 		if(sel_multi) {
 			end_line_sel++;
 		}
@@ -322,7 +322,7 @@ function toggleCodeBlock(editor) {
 		});
 	}
 
-	var cm = editor.codemirror,
+	var cm        = editor.codemirror,
 		cur_start = cm.getCursor("start"),
 		cur_end   = cm.getCursor("end"),
 		tok       = cm.getTokenAt({
@@ -714,8 +714,8 @@ function toggleSideBySide(editor) {
 		previewNormal.className = previewNormal.className.replace(
 			/\s*editor-preview-active\s*/g, ""
 		);
-		var toolbar = editor.toolbarElements.preview;
-		var toolbar_div = wrapper.previousSibling;
+		var toolbar             = editor.toolbarElements.preview;
+		var toolbar_div         = wrapper.previousSibling;
 		toolbar.className       = toolbar.className.replace(/\s*active\s*/g, "");
 		toolbar_div.className   = toolbar_div.className.replace(/\s*disabled-for-preview*/g, "");
 	}
@@ -895,7 +895,7 @@ function _toggleLine(cm, name) {
 		"unordered-list" : /^(\s*)(\*|\-|\+)\s+/,
 		"ordered-list"   : /^(\s*)\d+\.\s+/
 	};
-	var map  = {
+	var map = {
 		"quote"          : "> ",
 		"unordered-list" : "* ",
 		"ordered-list"   : "1. "
@@ -1234,7 +1234,10 @@ var toolbarBuiltInButtons = {
 var insertTexts = {
 	link           : ["[", "](#url#)"],
 	image          : ["![](", "#url#)"],
-	table          : ["", "\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text     | Text     |\n\n"],
+	table          : [
+		"",
+		"\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text     | Text     |\n\n"
+	],
 	horizontalRule : ["", "\n\n-----\n\n"]
 };
 
@@ -1279,7 +1282,7 @@ function SimpleMDE(options) {
 	}
 
 	if(autoDownloadFA) {
-		var link = document.createElement("link");
+		var link  = document.createElement("link");
 		link.rel  = "stylesheet";
 		link.href = "https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css";
 		document.getElementsByTagName("head")[0].appendChild(link);
@@ -1423,7 +1426,7 @@ SimpleMDE.prototype.render = function(el) {
 	keyMaps["Enter"]     = "newlineAndIndentContinueMarkdownList";
 	keyMaps["Tab"]       = "tabAndIndentMarkdownList";
 	keyMaps["Shift-Tab"] = "shiftTabAndUnindentMarkdownList";
-	keyMaps["Esc"]       = function(cm) {
+	keyMaps["Esc"]       = function (cm) {
 		if(cm.getOption("fullScreen")) toggleFullScreen(self);
 	};
 
@@ -1599,9 +1602,9 @@ SimpleMDE.prototype.createSideBySide = function() {
 			return;
 		}
 		pScroll           = true;
-		var height = v.getScrollInfo().height - v.getScrollInfo().clientHeight;
-		var ratio = parseFloat(v.getScrollInfo().top) / height;
-		var move = (preview.scrollHeight - preview.clientHeight) * ratio;
+		var height        = v.getScrollInfo().height - v.getScrollInfo().clientHeight;
+		var ratio         = parseFloat(v.getScrollInfo().top) / height;
+		var move          = (preview.scrollHeight - preview.clientHeight) * ratio;
 		preview.scrollTop = move;
 	});
 
@@ -1720,7 +1723,7 @@ SimpleMDE.prototype.createToolbar = function(items) {
 	var el = document.getElementById("editor-toolbar");
 
 	el.addEventListener("focus", function (e) {
-		this.className += " focused12345";
+		this.className += " focused";
 	});
 
 	el.addEventListener("blur", function (e) {
@@ -1763,21 +1766,21 @@ SimpleMDE.prototype.createStatusbar = function(status) {
 				defaultValue = function(el) {
 					el.innerHTML = wordCount(cm.getValue());
 				};
-				onUpdate     = function(el) {
+				onUpdate     = function (el) {
 					el.innerHTML = wordCount(cm.getValue());
 				};
 			} else if(name === "lines") {
 				defaultValue = function(el) {
 					el.innerHTML = cm.lineCount();
 				};
-				onUpdate     = function(el) {
+				onUpdate     = function (el) {
 					el.innerHTML = cm.lineCount();
 				};
 			} else if(name === "cursor") {
 				defaultValue = function(el) {
 					el.innerHTML = "0:0";
 				};
-				onUpdate     = function(el) {
+				onUpdate     = function (el) {
 					var pos = cm.getCursor();
 					el.innerHTML = pos.line + ":" + pos.ch;
 				};
@@ -1879,67 +1882,67 @@ SimpleMDE.toggleFullScreen     = toggleFullScreen;
 SimpleMDE.prototype.toggleBold = function() {
 	toggleBold(this);
 };
-SimpleMDE.prototype.toggleItalic         = function() {
+SimpleMDE.prototype.toggleItalic         = function () {
 	toggleItalic(this);
 };
-SimpleMDE.prototype.toggleStrikethrough  = function() {
+SimpleMDE.prototype.toggleStrikethrough  = function () {
 	toggleStrikethrough(this);
 };
-SimpleMDE.prototype.toggleBlockquote     = function() {
+SimpleMDE.prototype.toggleBlockquote     = function () {
 	toggleBlockquote(this);
 };
 SimpleMDE.prototype.toggleHeadingSmaller = function() {
 	toggleHeadingSmaller(this);
 };
-SimpleMDE.prototype.toggleHeadingBigger  = function() {
+SimpleMDE.prototype.toggleHeadingBigger  = function () {
 	toggleHeadingBigger(this);
 };
-SimpleMDE.prototype.toggleHeading1       = function() {
+SimpleMDE.prototype.toggleHeading1       = function () {
 	toggleHeading1(this);
 };
-SimpleMDE.prototype.toggleHeading2       = function() {
+SimpleMDE.prototype.toggleHeading2       = function () {
 	toggleHeading2(this);
 };
-SimpleMDE.prototype.toggleHeading3       = function() {
+SimpleMDE.prototype.toggleHeading3       = function () {
 	toggleHeading3(this);
 };
-SimpleMDE.prototype.toggleCodeBlock      = function() {
+SimpleMDE.prototype.toggleCodeBlock      = function () {
 	toggleCodeBlock(this);
 };
-SimpleMDE.prototype.toggleUnorderedList  = function() {
+SimpleMDE.prototype.toggleUnorderedList  = function () {
 	toggleUnorderedList(this);
 };
-SimpleMDE.prototype.toggleOrderedList    = function() {
+SimpleMDE.prototype.toggleOrderedList    = function () {
 	toggleOrderedList(this);
 };
-SimpleMDE.prototype.cleanBlock           = function() {
+SimpleMDE.prototype.cleanBlock           = function () {
 	cleanBlock(this);
 };
-SimpleMDE.prototype.drawLink             = function() {
+SimpleMDE.prototype.drawLink             = function () {
 	drawLink(this);
 };
-SimpleMDE.prototype.drawImage            = function() {
+SimpleMDE.prototype.drawImage            = function () {
 	drawImage(this);
 };
-SimpleMDE.prototype.drawTable            = function() {
+SimpleMDE.prototype.drawTable            = function () {
 	drawTable(this);
 };
-SimpleMDE.prototype.drawHorizontalRule   = function() {
+SimpleMDE.prototype.drawHorizontalRule   = function () {
 	drawHorizontalRule(this);
 };
-SimpleMDE.prototype.undo                 = function() {
+SimpleMDE.prototype.undo                 = function () {
 	undo(this);
 };
-SimpleMDE.prototype.redo                 = function() {
+SimpleMDE.prototype.redo                 = function () {
 	redo(this);
 };
-SimpleMDE.prototype.togglePreview        = function() {
+SimpleMDE.prototype.togglePreview        = function () {
 	togglePreview(this);
 };
-SimpleMDE.prototype.toggleSideBySide     = function() {
+SimpleMDE.prototype.toggleSideBySide     = function () {
 	toggleSideBySide(this);
 };
-SimpleMDE.prototype.toggleFullScreen     = function() {
+SimpleMDE.prototype.toggleFullScreen     = function () {
 	toggleFullScreen(this);
 };
 
