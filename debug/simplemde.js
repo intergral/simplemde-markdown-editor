@@ -15498,19 +15498,19 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
 
   function blankLine(state) {
     // Reset linkTitle state
-	  state.linkTitle    = false;
-	  state.linkHref     = false;
-	  state.linkText     = false;
+	  state.linkTitle     = false;
+	  state.linkHref      = false;
+	  state.linkText      = false;
     // Reset EM state
-	  state.em           = false;
+	  state.em            = false;
     // Reset STRONG state
-	  state.strong       = false;
+	  state.strong        = false;
     // Reset strikethrough state
-    state.strikethrough  = false;
+	  state.strikethrough = false;
     // Reset state.quote
-	  state.quote        = 0;
+	  state.quote         = 0;
     // Reset state.indentedCode
-	  state.indentedCode = false;
+	  state.indentedCode  = false;
 	  if (state.f == htmlBlock) {
 		  var exit = htmlModeMissing
 		  if (!exit) {
@@ -16337,14 +16337,14 @@ CodeMirror.defineMIME("text/x-markdown", "markdown");
 	  {name : "Crystal", mime : "text/x-crystal", mode : "crystal", ext : ["cr"]},
 	  {name : "CSS", mime : "text/css", mode : "css", ext : ["css"]},
 	  {name : "CQL", mime : "text/x-cassandra", mode : "sql", ext : ["cql"]},
-	  {name: "D", mime: "text/x-d", mode: "d", ext: ["d"]},
-	  {name: "Dart", mimes: ["application/dart", "text/x-dart"], mode: "dart", ext: ["dart"]},
-	  {name: "diff", mime: "text/x-diff", mode: "diff", ext: ["diff", "patch"]},
-	  {name: "Django", mime: "text/x-django", mode: "django"},
-	  {name: "Dockerfile", mime: "text/x-dockerfile", mode: "dockerfile", file: /^Dockerfile$/},
-	  {name: "DTD", mime: "application/xml-dtd", mode: "dtd", ext: ["dtd"]},
-	  {name: "Dylan", mime: "text/x-dylan", mode: "dylan", ext: ["dylan", "dyl", "intr"]},
-	  {name: "EBNF", mime: "text/x-ebnf", mode: "ebnf"},
+	  {name : "D", mime : "text/x-d", mode : "d", ext : ["d"]},
+	  {name : "Dart", mimes : ["application/dart", "text/x-dart"], mode : "dart", ext : ["dart"]},
+	  {name : "diff", mime : "text/x-diff", mode : "diff", ext : ["diff", "patch"]},
+	  {name : "Django", mime : "text/x-django", mode : "django"},
+	  {name : "Dockerfile", mime : "text/x-dockerfile", mode : "dockerfile", file : /^Dockerfile$/},
+	  {name : "DTD", mime : "application/xml-dtd", mode : "dtd", ext : ["dtd"]},
+	  {name : "Dylan", mime : "text/x-dylan", mode : "dylan", ext : ["dylan", "dyl", "intr"]},
+	  {name : "EBNF", mime : "text/x-ebnf", mode : "ebnf"},
 	  {name : "ECL", mime : "text/x-ecl", mode : "ecl", ext : ["ecl"]},
 	  {name : "edn", mime : "application/edn", mode : "clojure", ext : ["edn"]},
 	  {name : "Eiffel", mime : "text/x-eiffel", mode : "eiffel", ext : ["e"]},
@@ -16413,8 +16413,8 @@ CodeMirror.defineMIME("text/x-markdown", "markdown");
 	  {name : "Lua", mime : "text/x-lua", mode : "lua", ext : ["lua"]},
 	  {name : "Markdown", mime : "text/x-markdown", mode : "markdown", ext : ["markdown", "md", "mkd"]},
 	  {name : "mIRC", mime : "text/mirc", mode : "mirc"},
-	  {name: "MariaDB SQL", mime: "text/x-mariadb", mode: "sql"},
-	  {name: "Mathematica", mime: "text/x-mathematica", mode: "mathematica", ext: ["m", "nb"]},
+	  {name : "MariaDB SQL", mime : "text/x-mariadb", mode : "sql"},
+	  {name : "Mathematica", mime : "text/x-mathematica", mode : "mathematica", ext : ["m", "nb"]},
 	  {name : "Modelica", mime : "text/x-modelica", mode : "modelica", ext : ["mo"]},
 	  {name : "MUMPS", mime : "text/x-mumps", mode : "mumps", ext : ["mps"]},
 	  {name : "MS SQL", mime : "text/x-mssql", mode : "sql"},
@@ -20926,10 +20926,13 @@ var toolbarBuiltInButtons = {
 };
 
 var insertTexts = {
-	link: ["[", "](#url#)"],
-	image: ["![](", "#url#)"],
-	table: ["", "\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text     | Text     |\n\n"],
-	horizontalRule: ["", "\n\n-----\n\n"]
+	link           : ["[", "](#url#)"],
+	image          : ["![](", "#url#)"],
+	table          : [
+		"",
+		"\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text     | Text     |\n\n"
+	],
+	horizontalRule : ["", "\n\n-----\n\n"]
 };
 
 var promptTexts = {
@@ -21414,11 +21417,13 @@ SimpleMDE.prototype.createToolbar = function(items) {
 	var el = document.getElementById("editor-toolbar");
 
 	el.addEventListener("focus", function (e) {
-		this.className += " focused12345";
+		if (!this.className.includes("focused")) {
+			this.className += " focused";
+		}
 	});
 
 	el.addEventListener("blur", function (e) {
-		this.className = this.className.replace(/\s*focused12345\b/, "");
+		this.className = this.className.replace(/\s*focused\b/, "");
 	});
 
 	return bar;

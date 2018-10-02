@@ -1723,7 +1723,9 @@ SimpleMDE.prototype.createToolbar = function(items) {
 	var el = document.getElementById("editor-toolbar");
 
 	el.addEventListener("focus", function (e) {
-		this.className += " focused";
+		if (!this.className.includes("focused")) {
+			this.className += " focused";
+		}
 	});
 
 	el.addEventListener("blur", function (e) {

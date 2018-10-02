@@ -438,10 +438,6 @@ span.CodeMirror-selectedtext { background: none; }
     opacity: .8
 }
 
-.editor-toolbar.focused12345 {
-    outline: blue;
-}
-
 .editor-toolbar.fullscreen {
     width: 100%;
     height: 50px;
