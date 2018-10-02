@@ -8,7 +8,7 @@ var gulp = require("gulp"),
 	buffer = require("vinyl-buffer"),
 	pkg = require("./package.json"),
 	debug = require("gulp-debug"),
-	eslint = require("gulp-eslint"),
+	//eslint = require("gulp-eslint"),
 	prettify = require("gulp-jsbeautifier"),
 	browserify = require("browserify"),
 	source = require("vinyl-source-stream"),
@@ -35,11 +35,11 @@ gulp.task("prettify-css", [], function() {
 });
 
 gulp.task("lint", ["prettify-js"], function() {
-	gulp.src("./src/js/**/*.js")
-		.pipe(debug())
-		.pipe(eslint())
-		.pipe(eslint.format())
-		.pipe(eslint.failAfterError());
+	//gulp.src("./src/js/**/*.js")
+	//	.pipe(debug())
+	//	.pipe(eslint())
+	//	.pipe(eslint.format())
+	//	.pipe(eslint.failAfterError());
 });
 
 function taskBrowserify(opts) {
@@ -63,7 +63,7 @@ gulp.task("browserify", ["lint"], function() {
 		.pipe(gulp.dest("./debug/"));
 });
 
-gulp.task("scripts", ["browserify:debug", "browserify", "lint"], function() {
+gulp.task("scripts", ["browserify:debug", "browserify"], function () {
 	var js_files = ["./debug/simplemde.js"];
 	
 	return gulp.src(js_files)
