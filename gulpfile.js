@@ -68,7 +68,7 @@ gulp.task("scripts", ["browserify:debug", "browserify"], function () {
 	
 	return gulp.src(js_files)
 		.pipe(concat("simplemde.min.js"))
-		.pipe(uglify())
+		//.pipe(uglify())
 		.pipe(buffer())
 		.pipe(header(banner, {pkg: pkg}))
 		.pipe(gulp.dest("./dist/"));

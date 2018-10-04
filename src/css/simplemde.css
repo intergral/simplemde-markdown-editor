@@ -29,6 +29,7 @@
 }
 
 .editor-toolbar {
+    display: block;
     position: relative;
     opacity: .6;
     -webkit-user-select: none;
@@ -63,6 +64,10 @@
 .editor-wrapper input.title:focus,
 .editor-wrapper input.title:hover {
     opacity: .8
+}
+
+.editor-toolbar.hidden {
+    display: none
 }
 
 .editor-toolbar.fullscreen {

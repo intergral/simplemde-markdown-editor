@@ -18908,7 +18908,8 @@ var Typo;
 			/**
 			 * Loads a Typo instance from a hash of all of the Typo properties.
 			 *
-			 * @param object obj A hash of Typo properties, probably gotten from a JSON.parse(JSON.stringify(typo_instance)).
+			 * @param object obj A hash of Typo properties, probably gotten from a
+			 *     JSON.parse(JSON.stringify(typo_instance)).
 			 */
 
 			load : function (obj) {
@@ -18928,8 +18929,8 @@ var Typo;
 			 * @param {String} [charset="ISO8859-1"] The expected charset of the file
 			 * @param {Boolean} async If true, the file will be read asynchronously. For node.js this does nothing, all
 			 *        files are read synchronously.
-			 * @returns {String} The file data if async is false, otherwise a promise object. If running node.js, the data is
-			 *          always returned.
+			 * @returns {String} The file data if async is false, otherwise a promise object. If running node.js, the
+			 *     data is always returned.
 			 */
 
 			_readFile : function (path, charset, async) {
@@ -21091,9 +21092,28 @@ SimpleMDE.prototype.markdown = function(text) {
  * Render editor to the given element.
  */
 SimpleMDE.prototype.render = function(el) {
+
 	if(!el) {
 		el = this.element || document.getElementsByTagName("textarea")[0];
 	}
+
+	el.addEventListener("focusin", function () {
+		document.getElementById("editor-toolbar").className = document.getElementById("editor-toolbar").className.replace(/\s*hidden\s*/g, "");
+	});
+
+	el.addEventListener("focusout", function (e) {
+		if (e.relatedTarget !== null) {
+			if (e.relatedTarget.id !== "editor-toolbar") {
+				if (e.relatedTarget.classList.value.includes("fa")) {
+					return;
+				}
+				document.getElementById("editor-toolbar").className += " hidden";
+			}
+		} else {
+			document.getElementById("editor-toolbar").className += " hidden";
+		}
+
+	});
 
 	if(this._rendered && this._rendered === el) {
 		// Already rendered.
@@ -21148,7 +21168,10 @@ SimpleMDE.prototype.render = function(el) {
 		mode.gitHubSpice = false;
 	}
 
-	this.codemirror = CodeMirror.fromTextArea(el, {
+	var textarea = document.createElement("textarea");
+	el.append(textarea);
+
+	this.codemirror = CodeMirror.fromTextArea(textarea, {
 		mode: mode,
 		backdrop: backdrop,
 		theme: "paper",
@@ -21194,7 +21217,8 @@ SimpleMDE.prototype.render = function(el) {
 	}.bind(temp_cm), 0);
 };
 
-// Safari, in Private Browsing Mode, looks like it supports localStorage but all calls to setItem throw QuotaExceededError. We're going to detect this and set a variable accordingly.
+				// Safari, in Private Browsing Mode, looks like it supports localStorage but all calls to setItem throw
+				// QuotaExceededError. We're going to detect this and set a variable accordingly.
 function isLocalStorageAvailable() {
 	if(typeof localStorage === "object") {
 		try {
@@ -21414,17 +21438,17 @@ SimpleMDE.prototype.createToolbar = function(items) {
 	var cmWrapper = cm.getWrapperElement();
 	cmWrapper.parentNode.insertBefore(bar, cmWrapper);
 
-	var el = document.getElementById("editor-toolbar");
-
-	el.addEventListener("focus", function (e) {
-		if (!this.className.includes("focused")) {
-			this.className += " focused";
-		}
-	});
-
-	el.addEventListener("blur", function (e) {
-		this.className = this.className.replace(/\s*focused\b/, "");
-	});
+	//var el = document.getElementById("editor-toolbar");
+	//
+	//el.addEventListener("focus", function (e) {
+	//	if (!this.className.includes("focused")) {
+	//		this.className += " focused";
+	//	}
+	//});
+	//
+	//el.addEventListener("blur", function (e) {
+	//	this.className = this.className.replace(/\s*focused\b/, "");
+	//});
 
 	return bar;
 };
