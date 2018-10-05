@@ -742,7 +742,7 @@ function toggleSideBySide(editor) {
 /**
  * Preview action.
  */
-function togglePreview(editor) {
+function togglePreview(editor, previewMode = null) {
 	var cm = editor.codemirror;
 	var wrapper = cm.getWrapperElement();
 	var toolbar_div = wrapper.previousSibling;
@@ -753,32 +753,55 @@ function togglePreview(editor) {
 		preview.className = "editor-preview";
 		wrapper.appendChild(preview);
 	}
-	if(/editor-preview-active/.test(preview.className)) {
-		preview.className = preview.className.replace(
-			/\s*editor-preview-active\s*/g, ""
-		);
-		if(toolbar) {
-			toolbar.className     = toolbar.className.replace(/\s*active\s*/g, "");
-			toolbar_div.className = toolbar_div.className.replace(/\s*disabled-for-preview*/g, "");
-		}
-	} else {
-		// When the preview button is clicked for the first time,
-		// give some time for the transition from editor.css to fire and the view to slide from right to left,
-		// instead of just appearing.
-		setTimeout(function() {
-			preview.className += " editor-preview-active";
-		}, 1);
-		if(toolbar) {
-			toolbar.className += " active";
-			toolbar_div.className += " disabled-for-preview";
-		}
+
+	switch (previewMode) {
+		case "focusout":
+			if (!/editor-preview-active/.test(preview.className)) {
+				previewOn(preview, toolbar, toolbar_div, true);
+			}
+			break;
+		case "focusin":
+			if (/editor-preview-active/.test(preview.className)) {
+				previewOff(preview, toolbar, toolbar_div, true);
+			}
+			break;
+		default:
+			if (/editor-preview-active/.test(preview.className)) {
+				previewOff(preview, toolbar, toolbar_div);
+			} else {
+				previewOn(preview, toolbar, toolbar_div);
+			}
 	}
+
 	preview.innerHTML = editor.options.previewRender(editor.value(), preview);
 
 	// Turn off side by side if needed
 	var sidebyside = cm.getWrapperElement().nextSibling;
 	if(/editor-preview-active-side/.test(sidebyside.className))
 		toggleSideBySide(editor);
+}
+
+function previewOff(preview, toolbar, toolbar_div, onFocusEvents = false) {
+	preview.className = preview.className.replace(
+		/\s*editor-preview-active\s*/g, ""
+	);
+	if (toolbar) {
+		toolbar.className     = toolbar.className.replace(/\s*active\s*/g, "");
+		toolbar_div.className = toolbar_div.className.replace(/\s*disabled-for-preview*/g, "");
+	}
+}
+
+function previewOn(preview, toolbar, toolbar_div, onFocusEvents = false) {
+	// When the preview button is clicked for the first time,
+	// give some time for the transition from editor.css to fire and the view to slide from right to left,
+	// instead of just appearing.
+	setTimeout(function () {
+		preview.className += " editor-preview-active";
+	}, 1);
+	if (toolbar) {
+		toolbar.className += " active";
+		toolbar_div.className += " disabled-for-preview";
+	}
 }
 
 function _replaceSelection(cm, active, startEnd, url) {
@@ -1397,13 +1420,19 @@ SimpleMDE.prototype.markdown = function(text) {
  * Render editor to the given element.
  */
 SimpleMDE.prototype.render = function(el) {
+	var self = this;
 
 	if(!el) {
 		el = this.element || document.getElementsByTagName("textarea")[0];
 	}
 
 	el.addEventListener("focusin", function () {
-		document.getElementById("editor-toolbar").className = document.getElementById("editor-toolbar").className.replace(/\s*hidden\s*/g, "");
+		var currentClass = document.getElementById("editor-toolbar").className;
+		if (currentClass.includes("fullscreen")) {
+			return;
+		}
+		document.getElementById("editor-toolbar").className = currentClass.replace(/\s*hidden\s*/g, "");
+		togglePreview(self, "focusin");
 	});
 
 	el.addEventListener("focusout", function (e) {
@@ -1412,12 +1441,20 @@ SimpleMDE.prototype.render = function(el) {
 				if (e.relatedTarget.classList.value.includes("fa")) {
 					return;
 				}
+				if (e.relatedTarget.localName === "textarea") {
+					return;
+				}
+				if (document.getElementById("editor-toolbar").className.includes("fullscreen")) {
+					return;
+				}
+
 				document.getElementById("editor-toolbar").className += " hidden";
+				togglePreview(self, "focusout");
 			}
 		} else {
 			document.getElementById("editor-toolbar").className += " hidden";
+			togglePreview(self, "focusout");
 		}
-
 	});
 
 	if(this._rendered && this._rendered === el) {
@@ -1428,7 +1465,6 @@ SimpleMDE.prototype.render = function(el) {
 	this.element = el;
 	var options = this.options;
 
-	var self = this;
 	var keyMaps = {};
 
 	for(var key in options.shortcuts) {
@@ -1474,6 +1510,9 @@ SimpleMDE.prototype.render = function(el) {
 	}
 
 	var textarea = document.createElement("textarea");
+	textarea.setAttribute("id", "markdown-textarea");
+	textarea.innerHTML += el.innerText || el.textContent;
+	el.innerText = null;
 	el.append(textarea);
 
 	this.codemirror = CodeMirror.fromTextArea(textarea, {
