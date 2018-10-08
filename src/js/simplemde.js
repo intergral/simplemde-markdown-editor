@@ -1439,6 +1439,7 @@ SimpleMDE.prototype.render = function(el) {
 	});
 
 	el.addEventListener("focusout", function (e) {
+		console.log(e);
 		if (e.relatedTarget !== null) {
 			if (e.relatedTarget.id !== this.id + "-editor-toolbar") {
 				if (e.relatedTarget.classList.value.includes("fa")) {
