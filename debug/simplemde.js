@@ -21254,7 +21254,7 @@ SimpleMDE.prototype.render = function(el) {
 	if(options.toolbar !== false) {
 		this.gui.toolbar = this.createToolbar();
 	}
-	if(options.status !== false) {
+	if (options.status === true) {
 		this.gui.statusbar = this.createStatusbar();
 	}
 	if(options.autosave != undefined && options.autosave.enabled === true) {
