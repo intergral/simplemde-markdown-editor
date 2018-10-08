@@ -401,6 +401,10 @@ span.CodeMirror-selectedtext { background: none; }
     width: 50% !important;
 }
 
+.editor-toolbar:focus {
+    outline: none;
+}
+
 .editor-toolbar {
     display: block;
     position: relative;

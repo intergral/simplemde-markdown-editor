@@ -16,6 +16,7 @@ var marked = require("marked");
 
 // Some variables
 var isMac = /Mac/.test(navigator.platform);
+var id    = null;
 
 // Mapping of actions that can be bound to keyboard shortcuts or toolbar buttons
 var bindings = {
@@ -755,14 +756,14 @@ function togglePreview(editor, previewMode = null) {
 	}
 
 	switch (previewMode) {
-		case "focusout":
+		case "on":
 			if (!/editor-preview-active/.test(preview.className)) {
-				previewOn(preview, toolbar, toolbar_div, true);
+				previewOn(preview, toolbar, toolbar_div);
 			}
 			break;
-		case "focusin":
+		case "off":
 			if (/editor-preview-active/.test(preview.className)) {
-				previewOff(preview, toolbar, toolbar_div, true);
+				previewOff(preview, toolbar, toolbar_div);
 			}
 			break;
 		default:
@@ -781,7 +782,7 @@ function togglePreview(editor, previewMode = null) {
 		toggleSideBySide(editor);
 }
 
-function previewOff(preview, toolbar, toolbar_div, onFocusEvents = false) {
+function previewOff(preview, toolbar, toolbar_div) {
 	preview.className = preview.className.replace(
 		/\s*editor-preview-active\s*/g, ""
 	);
@@ -791,7 +792,7 @@ function previewOff(preview, toolbar, toolbar_div, onFocusEvents = false) {
 	}
 }
 
-function previewOn(preview, toolbar, toolbar_div, onFocusEvents = false) {
+function previewOn(preview, toolbar, toolbar_div) {
 	// When the preview button is clicked for the first time,
 	// give some time for the transition from editor.css to fire and the view to slide from right to left,
 	// instead of just appearing.
@@ -1426,34 +1427,36 @@ SimpleMDE.prototype.render = function(el) {
 		el = this.element || document.getElementsByTagName("textarea")[0];
 	}
 
+	this.id = el.getAttribute('id');
+
 	el.addEventListener("focusin", function () {
-		var currentClass = document.getElementById("editor-toolbar").className;
+		var currentClass = document.getElementById(this.id + "-editor-toolbar").className;
 		if (currentClass.includes("fullscreen")) {
 			return;
 		}
-		document.getElementById("editor-toolbar").className = currentClass.replace(/\s*hidden\s*/g, "");
-		togglePreview(self, "focusin");
+		document.getElementById(this.id + "-editor-toolbar").className = currentClass.replace(/\s*hidden\s*/g, "");
+		togglePreview(self, "off");
 	});
 
 	el.addEventListener("focusout", function (e) {
 		if (e.relatedTarget !== null) {
-			if (e.relatedTarget.id !== "editor-toolbar") {
+			if (e.relatedTarget.id !== this.id + "-editor-toolbar") {
 				if (e.relatedTarget.classList.value.includes("fa")) {
 					return;
 				}
 				if (e.relatedTarget.localName === "textarea") {
 					return;
 				}
-				if (document.getElementById("editor-toolbar").className.includes("fullscreen")) {
+				if (document.getElementById(this.id + "-editor-toolbar").className.includes("fullscreen")) {
 					return;
 				}
 
-				document.getElementById("editor-toolbar").className += " hidden";
-				togglePreview(self, "focusout");
+				document.getElementById(this.id + "-editor-toolbar").className += " hidden";
+				togglePreview(self, "on");
 			}
 		} else {
-			document.getElementById("editor-toolbar").className += " hidden";
-			togglePreview(self, "focusout");
+			document.getElementById(this.id + "-editor-toolbar").className += " hidden";
+			togglePreview(self, "on");
 		}
 	});
 
@@ -1559,6 +1562,8 @@ SimpleMDE.prototype.render = function(el) {
 	setTimeout(function() {
 		temp_cm.refresh();
 	}.bind(temp_cm), 0);
+
+	togglePreview(self, "on");
 };
 
 // Safari, in Private Browsing Mode, looks like it supports localStorage but all calls to setItem throw
@@ -1699,8 +1704,8 @@ SimpleMDE.prototype.createToolbar = function(items) {
 	}
 
 	var bar       = document.createElement("div");
-	bar.className = "editor-toolbar";
-	bar.id        = "editor-toolbar";
+	bar.className = "editor-toolbar hidden";
+	bar.id        = this.id + "-editor-toolbar";
 	bar.tabIndex  = 1;
 
 	var self = this;
