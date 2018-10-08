@@ -1441,6 +1441,9 @@ SimpleMDE.prototype.render = function(el) {
 	el.addEventListener("focusout", function (e) {
 		if (e.relatedTarget !== null) {
 			if (e.relatedTarget.id !== this.id + "-editor-toolbar") {
+				if (e.target.localName === "textarea") {
+					return;
+				}
 				if (e.relatedTarget.classList.value.includes("fa")) {
 					return;
 				}

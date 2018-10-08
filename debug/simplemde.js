@@ -14326,7 +14326,7 @@ CodeMirror.overlayMode = function(base, overlay, combine) {
 							}
 						}
 
-						var cutFront                    = 0, cutEnd        = 0;
+						var cutFront                    = 0, cutEnd = 0;
 						var newTop = newText[0], oldTop = oldText[0],
 							maxCutFront = Math.min(newTop.length, oldTop.length);
 						while (cutFront < maxCutFront && newTop.charCodeAt(cutFront) == oldTop.charCodeAt(cutFront)) {
@@ -21135,6 +21135,9 @@ SimpleMDE.prototype.render = function(el) {
 	el.addEventListener("focusout", function (e) {
 		if (e.relatedTarget !== null) {
 			if (e.relatedTarget.id !== this.id + "-editor-toolbar") {
+				if (e.target.localName === "textarea") {
+					return;
+				}
 				if (e.relatedTarget.classList.value.includes("fa")) {
 					return;
 				}
