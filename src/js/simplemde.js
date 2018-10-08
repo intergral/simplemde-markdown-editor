@@ -743,7 +743,7 @@ function toggleSideBySide(editor) {
 /**
  * Preview action.
  */
-function togglePreview(editor, previewMode = null) {
+function togglePreview(editor, previewMode) {
 	var cm = editor.codemirror;
 	var wrapper = cm.getWrapperElement();
 	var toolbar_div = wrapper.previousSibling;
