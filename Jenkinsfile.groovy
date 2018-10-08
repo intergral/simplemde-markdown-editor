@@ -23,6 +23,7 @@ pipeline {
     }
    }
    steps {
+      sh 'npm install'
       sh 'npm run gulp'
       sh 'npm version 1.1.$BUILD_NUMBER --no-git-tag-version'
       withCredentials([string(credentialsId: 'NPM_AUTH_TOKEN', variable: 'npm_auth')]) {

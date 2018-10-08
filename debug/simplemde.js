@@ -1,6 +1,6 @@
 /**
  * @intergral/simplemde v1.0.2
- * Copyright
+ * Copyright 
  * @link https://github.com/intergral/simplemde-markdown-editor
  * @license MIT
  */
@@ -18908,7 +18908,8 @@ var Typo;
 			/**
 			 * Loads a Typo instance from a hash of all of the Typo properties.
 			 *
-			 * @param object obj A hash of Typo properties, probably gotten from a JSON.parse(JSON.stringify(typo_instance)).
+			 * @param object obj A hash of Typo properties, probably gotten from a
+			 *     JSON.parse(JSON.stringify(typo_instance)).
 			 */
 
 			load : function (obj) {
@@ -18928,8 +18929,8 @@ var Typo;
 			 * @param {String} [charset="ISO8859-1"] The expected charset of the file
 			 * @param {Boolean} async If true, the file will be read asynchronously. For node.js this does nothing, all
 			 *        files are read synchronously.
-			 * @returns {String} The file data if async is false, otherwise a promise object. If running node.js, the data is
-			 *          always returned.
+			 * @returns {String} The file data if async is false, otherwise a promise object. If running node.js, the
+			 *     data is always returned.
 			 */
 
 			_readFile : function (path, charset, async) {

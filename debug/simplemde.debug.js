@@ -1,6 +1,6 @@
 /**
  * @intergral/simplemde v1.0.2
- * Copyright
+ * Copyright 
  * @link https://github.com/intergral/simplemde-markdown-editor
  * @license MIT
  */
@@ -14326,7 +14326,7 @@ CodeMirror.overlayMode = function(base, overlay, combine) {
 							}
 						}
 
-						var cutFront                    = 0, cutEnd        = 0;
+						var cutFront                    = 0, cutEnd = 0;
 						var newTop = newText[0], oldTop = oldText[0],
 							maxCutFront = Math.min(newTop.length, oldTop.length);
 						while (cutFront < maxCutFront && newTop.charCodeAt(cutFront) == oldTop.charCodeAt(cutFront)) {
