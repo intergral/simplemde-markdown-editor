@@ -801,7 +801,7 @@ function previewOn(preview, toolbar, toolbar_div) {
 	}, 1);
 	if (toolbar) {
 		toolbar.className += " active";
-		toolbar_div.className += " disabled-for-preview";
+		toolbar_div.className = toolbar_div.className + " disabled-for-preview";
 	}
 }
 
@@ -1444,13 +1444,18 @@ SimpleMDE.prototype.render = function(el) {
 				if (e.relatedTarget.classList.value.includes("fa")) {
 					return;
 				}
+
 				if (e.relatedTarget.localName === "textarea") {
 					return;
 				}
-				if (document.getElementById(this.id + "-editor-toolbar").className.includes("fullscreen")) {
+
+				if (e.relatedTarget.className === "CodeMirror-scroll") {
 					return;
 				}
 
+				if (document.getElementById(this.id + "-editor-toolbar").className.includes("fullscreen")) {
+					return;
+				}
 				document.getElementById(this.id + "-editor-toolbar").className += " hidden";
 				togglePreview(self, "on");
 			}
@@ -1786,18 +1791,6 @@ SimpleMDE.prototype.createToolbar = function(items) {
 
 	var cmWrapper = cm.getWrapperElement();
 	cmWrapper.parentNode.insertBefore(bar, cmWrapper);
-
-	//var el = document.getElementById("editor-toolbar");
-	//
-	//el.addEventListener("focus", function (e) {
-	//	if (!this.className.includes("focused")) {
-	//		this.className += " focused";
-	//	}
-	//});
-	//
-	//el.addEventListener("blur", function (e) {
-	//	this.className = this.className.replace(/\s*focused\b/, "");
-	//});
 
 	return bar;
 };
