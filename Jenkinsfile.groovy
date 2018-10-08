@@ -23,7 +23,7 @@ pipeline {
     }
    }
    steps {
-      sh 'gulp'
+      sh 'npm run gulp'
       sh 'npm version 1.1.$BUILD_NUMBER --no-git-tag-version'
       withCredentials([string(credentialsId: 'NPM_AUTH_TOKEN', variable: 'npm_auth')]) {
        sh 'echo "//registry.npmjs.org/:_authToken=$npm_auth" > ~/.npmrc'
