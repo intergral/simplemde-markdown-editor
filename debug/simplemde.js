@@ -14326,7 +14326,7 @@ CodeMirror.overlayMode = function(base, overlay, combine) {
 							}
 						}
 
-						var cutFront                    = 0, cutEnd = 0;
+						var cutFront                    = 0, cutEnd        = 0;
 						var newTop = newText[0], oldTop = oldText[0],
 							maxCutFront = Math.min(newTop.length, oldTop.length);
 						while (cutFront < maxCutFront && newTop.charCodeAt(cutFront) == oldTop.charCodeAt(cutFront)) {
@@ -21133,11 +21133,14 @@ SimpleMDE.prototype.render = function(el) {
 	});
 
 	el.addEventListener("focusout", function (e) {
+		console.log(e);
 		if (e.relatedTarget !== null) {
 			if (e.relatedTarget.id !== this.id + "-editor-toolbar") {
-				if (e.target.localName === "textarea") {
-					return;
-				}
+				//if(e.target.localName === "textarea") {
+				//	console.log("in some weird textarea", e.target.localName, e.target);
+				//	return;
+				//}
+
 				if (e.relatedTarget.classList.value.includes("fa")) {
 					return;
 				}
@@ -21147,6 +21150,16 @@ SimpleMDE.prototype.render = function(el) {
 				}
 
 				if (e.relatedTarget.className === "CodeMirror-scroll") {
+					return;
+				}
+
+				if (e.target.className.includes("editor-toolbar")) {
+					console.log("inside if", e.target.className);
+					return;
+				}
+
+				if (e.relatedTarget.id === self.id) {
+					console.log("will this work?");
 					return;
 				}
 
