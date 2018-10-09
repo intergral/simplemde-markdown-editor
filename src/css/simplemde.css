@@ -1,6 +1,5 @@
 .CodeMirror {
     height: auto;
-    min-height: 32px;
     border: 1px solid #ddd;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
@@ -10,7 +9,7 @@
 }
 
 .CodeMirror-scroll {
-    min-height: 32px
+    overflow-y: hidden !important;
 }
 
 .CodeMirror-fullscreen {
@@ -224,6 +223,7 @@
 }
 
 .editor-preview {
+    overflow-y: hidden !important;
     padding: 10px;
     position: absolute;
     width: 100%;

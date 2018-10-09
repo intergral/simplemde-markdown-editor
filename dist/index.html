@@ -34,7 +34,7 @@
     <!--</div>-->
 
     <div id="demo1" tabindex="1">For **testing** purpose</div>
-    <div id="demo2" tabindex="1">For **another testing** purpose</div>
+    <div id="demo2" tabindex="1">* For **another testing** purpose</div>
 
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
@@ -46,11 +46,13 @@
 		new SimpleMDE({
 			element      : document.getElementById("demo1"),
 			spellChecker : false,
+			linewrapping : true
 		});
 
 		new SimpleMDE({
 			element      : document.getElementById("demo2"),
 			spellChecker : false,
+			linewrapping : true
 		});
     </script>
 </section>

@@ -1560,10 +1560,11 @@ SimpleMDE.prototype.render = function(el) {
 		lineNumbers        : false,
 		autofocus          : (options.autofocus === true) ? true : false,
 		extraKeys          : keyMaps,
-		lineWrapping       : (options.lineWrapping === false) ? false : true,
+		lineWrapping       : true,
 		allowDropFileTypes : ["text/plain"],
 		placeholder        : options.placeholder || el.getAttribute("placeholder") || "",
-		styleSelectedText  : (options.styleSelectedText != undefined) ? options.styleSelectedText : true
+		styleSelectedText  : (options.styleSelectedText != undefined) ? options.styleSelectedText : true,
+		scrollbarStyle     : "null"
 	});
 
 	if(options.forceSync === true) {

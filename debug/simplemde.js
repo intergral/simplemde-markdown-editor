@@ -14326,7 +14326,7 @@ CodeMirror.overlayMode = function(base, overlay, combine) {
 							}
 						}
 
-						var cutFront                    = 0, cutEnd        = 0;
+						var cutFront                    = 0, cutEnd = 0;
 						var newTop = newText[0], oldTop = oldText[0],
 							maxCutFront = Math.min(newTop.length, oldTop.length);
 						while (cutFront < maxCutFront && newTop.charCodeAt(cutFront) == oldTop.charCodeAt(cutFront)) {
@@ -20437,7 +20437,7 @@ function toggleSideBySide(editor) {
 /**
  * Preview action.
  */
-function togglePreview(editor, previewMode = null) {
+function togglePreview(editor, previewMode) {
 	var cm = editor.codemirror;
 	var wrapper = cm.getWrapperElement();
 	var toolbar_div = wrapper.previousSibling;
@@ -21245,19 +21245,20 @@ SimpleMDE.prototype.render = function(el) {
 	el.append(textarea);
 
 	this.codemirror = CodeMirror.fromTextArea(textarea, {
-		mode: mode,
-		backdrop: backdrop,
-		theme: "paper",
-		tabSize: (options.tabSize != undefined) ? options.tabSize : 2,
-		indentUnit: (options.tabSize != undefined) ? options.tabSize : 2,
-		indentWithTabs: (options.indentWithTabs === false) ? false : true,
-		lineNumbers: false,
-		autofocus: (options.autofocus === true) ? true : false,
-		extraKeys: keyMaps,
-		lineWrapping: (options.lineWrapping === false) ? false : true,
-		allowDropFileTypes: ["text/plain"],
-		placeholder: options.placeholder || el.getAttribute("placeholder") || "",
-		styleSelectedText: (options.styleSelectedText != undefined) ? options.styleSelectedText : true
+		mode               : mode,
+		backdrop           : backdrop,
+		theme              : "paper",
+		tabSize            : (options.tabSize != undefined) ? options.tabSize : 2,
+		indentUnit         : (options.tabSize != undefined) ? options.tabSize : 2,
+		indentWithTabs     : (options.indentWithTabs === false) ? false : true,
+		lineNumbers        : false,
+		autofocus          : (options.autofocus === true) ? true : false,
+		extraKeys          : keyMaps,
+		lineWrapping       : true,
+		allowDropFileTypes : ["text/plain"],
+		placeholder        : options.placeholder || el.getAttribute("placeholder") || "",
+		styleSelectedText  : (options.styleSelectedText != undefined) ? options.styleSelectedText : true,
+		scrollbarStyle     : "null"
 	});
 
 	if(options.forceSync === true) {

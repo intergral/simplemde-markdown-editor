@@ -373,7 +373,6 @@ span.CodeMirror-selectedtext { background: none; }
 
 .CodeMirror {
     height: auto;
-    min-height: 32px;
     border: 1px solid #ddd;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
@@ -382,8 +381,11 @@ span.CodeMirror-selectedtext { background: none; }
     z-index: 1;
 }
 
+.CodeMirror-lines {
+}
+
 .CodeMirror-scroll {
-    min-height: 32px
+    overflow-y: hidden !important;
 }
 
 .CodeMirror-fullscreen {
@@ -597,6 +599,7 @@ span.CodeMirror-selectedtext { background: none; }
 }
 
 .editor-preview {
+    overflow-y: hidden !important;
     padding: 10px;
     position: absolute;
     width: 100%;
