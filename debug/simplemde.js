@@ -18908,8 +18908,7 @@ var Typo;
 			/**
 			 * Loads a Typo instance from a hash of all of the Typo properties.
 			 *
-			 * @param object obj A hash of Typo properties, probably gotten from a
-			 *     JSON.parse(JSON.stringify(typo_instance)).
+			 * @param object obj A hash of Typo properties, probably gotten from a JSON.parse(JSON.stringify(typo_instance)).
 			 */
 
 			load : function (obj) {
@@ -18929,8 +18928,8 @@ var Typo;
 			 * @param {String} [charset="ISO8859-1"] The expected charset of the file
 			 * @param {Boolean} async If true, the file will be read asynchronously. For node.js this does nothing, all
 			 *        files are read synchronously.
-			 * @returns {String} The file data if async is false, otherwise a promise object. If running node.js, the
-			 *     data is always returned.
+			 * @returns {String} The file data if async is false, otherwise a promise object. If running node.js, the data is
+			 *          always returned.
 			 */
 
 			_readFile : function (path, charset, async) {
@@ -20926,13 +20925,13 @@ var toolbarBuiltInButtons = {
 	"separator-4": {
 		name: "separator-4"
 	},
-	"guide": {
-		name: "guide",
-		action: "https://simplemde.com/markdown-guide",
-		className: "fa fa-question-circle",
-		title: "Markdown Guide",
-		default: true
-	},
+	//"guide": {
+	//	name: "guide",
+	//	action: "https://simplemde.com/markdown-guide",
+	//	className: "fa fa-question-circle",
+	//	title: "Markdown Guide",
+	//	default: true
+	//},
 	"separator-5": {
 		name: "separator-5"
 	},
@@ -21016,25 +21015,29 @@ function SimpleMDE(options) {
 		return;
 	}
 
+
 	// Handle toolbar
 	if(options.toolbar === undefined) {
 		// Initialize
 		options.toolbar = [];
-
-		// Loop over the built in buttons, to get the preferred order
-		for(var key in toolbarBuiltInButtons) {
-			if(toolbarBuiltInButtons.hasOwnProperty(key)) {
-				if(key.indexOf("separator-") != -1) {
-					options.toolbar.push("|");
-				}
-
-				if(toolbarBuiltInButtons[key].default === true || (options.showIcons && options.showIcons.constructor === Array && options.showIcons.indexOf(key) != -1)) {
-					options.toolbar.push(key);
-				}
-			}
-		}
+		getToolbar(options);
 	}
-
+	//else {
+	//	var optionsToolbar = [].concat(options.toolbar);
+	//	options.toolbar = [];
+	//	console.log("built in", toolbarBuiltInButtons);
+	//	for(var k in toolbarBuiltInButtons) {
+	//		console.log("for loop", optionsToolbar, optionsToolbar[k]);
+	//		console.log("built in inside loop", toolbarBuiltInButtons);
+	//		if(optionsToolbar.includes(toolbarBuiltInButtons[k])) {
+	//			console.log("goes through here?", k);
+	//			//	getToolbar(options);
+	//			//} else {
+	//			//	console.log("else", optionsToolbar[k], toolbarBuiltInButtons[key]);
+	//			//	options.toolbar.push(k);
+	//		}
+	//	}
+	//}
 	// Handle status bar
 	if(!options.hasOwnProperty("status")) {
 		options.status = ["autosave", "lines", "words", "cursor"];
@@ -21082,6 +21085,21 @@ function SimpleMDE(options) {
 		this.value(options.initialValue);
 	}
 }
+
+				function getToolbar(options) {
+					// Loop over the built in buttons, to get the preferred order
+					for (var key in toolbarBuiltInButtons) {
+						if (toolbarBuiltInButtons.hasOwnProperty(key)) {
+							if (key.indexOf("separator-") != -1) {
+								options.toolbar.push("|");
+							}
+
+							if (toolbarBuiltInButtons[key].default === true || (options.showIcons && options.showIcons.constructor === Array && options.showIcons.indexOf(key) != -1)) {
+								options.toolbar.push(key);
+							}
+						}
+					}
+				}
 
 /**
  * Default markdown render.
@@ -21148,9 +21166,9 @@ SimpleMDE.prototype.render = function(el) {
 					return;
 				}
 
-				if (e.target.className.includes("editor-toolbar")) {
-					return;
-				}
+				//if(e.target.className.includes("editor-toolbar")) {
+				//	return;
+				//}
 
 				if (e.relatedTarget.id === self.id) {
 					return;
