@@ -1,4 +1,4 @@
-.CodeMirror {
+.simplemde .CodeMirror {
     height: auto;
     border: 1px solid #ddd;
     border-bottom-left-radius: 0;
@@ -8,11 +8,11 @@
     z-index: 1;
 }
 
-.CodeMirror-scroll {
+.simplemde .CodeMirror-scroll {
     overflow-y: hidden !important;
 }
 
-.CodeMirror-fullscreen {
+.simplemde .CodeMirror-fullscreen {
     background: #fff;
     position: fixed !important;
     top: 50px;
@@ -23,7 +23,7 @@
     z-index: 9;
 }
 
-.CodeMirror-sided {
+.simplemde .CodeMirror-sided {
     width: 50% !important;
 }
 
@@ -279,59 +279,59 @@
     padding: 5px;
 }
 
-.CodeMirror .CodeMirror-code .cm-tag {
+.simplemde .CodeMirror .CodeMirror-code .cm-tag {
     color: #63a35c;
 }
 
-.CodeMirror .CodeMirror-code .cm-attribute {
+.simplemde .CodeMirror .CodeMirror-code .cm-attribute {
     color: #795da3;
 }
 
-.CodeMirror .CodeMirror-code .cm-string {
+.simplemde .CodeMirror .CodeMirror-code .cm-string {
     color: #183691;
 }
 
-.CodeMirror .CodeMirror-selected {
+.simplemde .CodeMirror .CodeMirror-selected {
     background: #d9d9d9;
 }
 
-.CodeMirror .CodeMirror-code .cm-header-1 {
+.simplemde .CodeMirror .CodeMirror-code .cm-header-1 {
     font-size: 200%;
     line-height: 200%;
 }
 
-.CodeMirror .CodeMirror-code .cm-header-2 {
+.simplemde .CodeMirror .CodeMirror-code .cm-header-2 {
     font-size: 160%;
     line-height: 160%;
 }
 
-.CodeMirror .CodeMirror-code .cm-header-3 {
+.simplemde .CodeMirror .CodeMirror-code .cm-header-3 {
     font-size: 125%;
     line-height: 125%;
 }
 
-.CodeMirror .CodeMirror-code .cm-header-4 {
+.simplemde .CodeMirror .CodeMirror-code .cm-header-4 {
     font-size: 110%;
     line-height: 110%;
 }
 
-.CodeMirror .CodeMirror-code .cm-comment {
+.simplemde .CodeMirror .CodeMirror-code .cm-comment {
     background: rgba(0, 0, 0, .05);
     border-radius: 0;
 }
 
-.CodeMirror .CodeMirror-code .cm-link {
+.simplemde .CodeMirror .CodeMirror-code .cm-link {
     color: #7f8c8d;
 }
 
-.CodeMirror .CodeMirror-code .cm-url {
+.simplemde .CodeMirror .CodeMirror-code .cm-url {
     color: #aab2b3;
 }
 
-.CodeMirror .CodeMirror-code .cm-strikethrough {
+.simplemde .CodeMirror .CodeMirror-code .cm-strikethrough {
     text-decoration: line-through;
 }
 
-.CodeMirror .CodeMirror-placeholder {
+.simplemde .CodeMirror .CodeMirror-placeholder {
     opacity: .5;
 }
