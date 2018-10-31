@@ -787,10 +787,9 @@ function previewOff(preview, toolbar, toolbar_div) {
 		/\s*editor-preview-active\s*/g, ""
 	);
 
-	var cm = document.getElementsByClassName("CodeMirror")[0];
-	cm.className = cm.className.replace(
-		/\s*toolbar-shown\s*/g, ""
-	);
+	var cm = document.getElementById("codemirror-container");
+	cm.className = cm.className.replace(/\s*toolbar-hidden\s*/g, "");
+	console.log(cm);
 	if(toolbar) {
 		toolbar.className = toolbar.className.replace(/\s*active\s*/g, "");
 		toolbar_div.className = toolbar_div.className.replace(/\s*disabled-for-preview*/g, "");
@@ -803,8 +802,9 @@ function previewOn(preview, toolbar, toolbar_div) {
 	// instead of just appearing.
 	setTimeout(function() {
 		preview.className += " editor-preview-active";
-		var cm = document.getElementsByClassName("CodeMirror")[0];
-		cm.className += " toolbar-shown";
+		var cm = document.getElementById("codemirror-container");
+		cm.className += " toolbar-hidden";
+		console.log(cm);
 	}, 1);
 	if(toolbar) {
 		toolbar.className += " active";
@@ -1603,6 +1603,11 @@ SimpleMDE.prototype.render = function(el) {
 	setTimeout(function() {
 		temp_cm.refresh();
 	}.bind(temp_cm), 0);
+
+	var wrapper = this.codemirror.display.wrapper;
+	console.log(wrapper);
+
+	wrapper.setAttribute("id", "codemirror-container");
 
 	togglePreview(self, "on");
 };
