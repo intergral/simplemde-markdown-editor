@@ -786,6 +786,11 @@ function previewOff(preview, toolbar, toolbar_div) {
 	preview.className = preview.className.replace(
 		/\s*editor-preview-active\s*/g, ""
 	);
+
+	var cm = document.getElementsByClassName("CodeMirror")[0];
+	cm.className = cm.className.replace(
+		/\s*toolbar-shown\s*/g, ""
+	);
 	if(toolbar) {
 		toolbar.className = toolbar.className.replace(/\s*active\s*/g, "");
 		toolbar_div.className = toolbar_div.className.replace(/\s*disabled-for-preview*/g, "");
@@ -798,6 +803,8 @@ function previewOn(preview, toolbar, toolbar_div) {
 	// instead of just appearing.
 	setTimeout(function() {
 		preview.className += " editor-preview-active";
+		var cm = document.getElementsByClassName("CodeMirror")[0];
+		cm.className += " toolbar-shown";
 	}, 1);
 	if(toolbar) {
 		toolbar.className += " active";
